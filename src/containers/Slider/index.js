@@ -10,21 +10,24 @@ const Slider = () => {
   const byDateDesc = data?.focus.sort((evtA, evtB) =>
     new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
   );
+
   const nextCard = () => {
-    setTimeout(
-      () => setIndex(index < byDateDesc.length ? index + 1 : 0),
-      5000
-    );
+    setTimeout(() => setIndex(index < byDateDesc.length ? index + 1 : 0), 5000);
   };
+
   useEffect(() => {
     nextCard();
   });
+
+  function generateUniqueKey() {
+    return Math.random().toString(36).substring(2) + Date.now().toString(36);
+  }
+
   return (
     <div className="SlideCardList">
       {byDateDesc?.map((event, idx) => (
-        <>
+        <div key={`${event.date}-${generateUniqueKey()}`}>
           <div
-            key={event.title}
             className={`SlideCard SlideCard--${
               index === idx ? "display" : "hide"
             }`}
@@ -38,19 +41,21 @@ const Slider = () => {
               </div>
             </div>
           </div>
+
           <div className="SlideCard__paginationContainer">
             <div className="SlideCard__pagination">
               {byDateDesc.map((_, radioIdx) => (
                 <input
-                  key={`${event.id}`}
+                  key={generateUniqueKey()}
                   type="radio"
                   name="radio-button"
-                  checked={idx === radioIdx}
+                  checked={index === radioIdx}
+                  onChange={() => {}}
                 />
               ))}
             </div>
           </div>
-        </>
+        </div>
       ))}
     </div>
   );
