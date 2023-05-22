@@ -12,15 +12,11 @@ const Slider = () => {
   );
 
   const nextCard = () => {
-    if (byDateDesc && byDateDesc.length) {
-      setIndex(index === byDateDesc.length - 1 ? 0 : index + 1);
-    }
+    setTimeout(() => setIndex((index + 1) % (byDateDesc?.length || 0)), 5000);
   };
-
   useEffect(() => {
-    const timeout = setTimeout(nextCard, 1000);
-    return () => clearTimeout(timeout);
-  }, [index]);
+    nextCard();
+  });
 
   function generateUniqueKey() {
     return Math.random().toString(36).substring(2) + Date.now().toString(36);
