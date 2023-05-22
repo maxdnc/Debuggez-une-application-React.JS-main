@@ -12,11 +12,15 @@ const Slider = () => {
   );
 
   const nextCard = () => {
-    setTimeout(() => setIndex((index + 1) % (byDateDesc?.length || 0)), 5000);
+    setIndex((index + 1) % (byDateDesc?.length || 0));
   };
+
   useEffect(() => {
-    nextCard();
-  });
+    const interval = setInterval(() => {
+      nextCard();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [index]);
 
   function generateUniqueKey() {
     return Math.random().toString(36).substring(2) + Date.now().toString(36);
@@ -50,6 +54,9 @@ const Slider = () => {
                   name="radio-button"
                   checked={index === radioIdx}
                   onChange={() => {}}
+                  onClick={() => {
+                    setIndex(radioIdx);
+                  }}
                 />
               ))}
             </div>
