@@ -1,6 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import Home from "./index";
-import EventCard from "../../components/EventCard";
 
 describe("When Form is created", () => {
   it("a list of fields card is displayed", async () => {
@@ -28,14 +27,28 @@ describe("When Form is created", () => {
 });
 
 describe("When a page is created", () => {
-  it("a list of events is displayed", () => {});
+  it("a list of events is displayed", () => {
+    const { container } = render(<Home />);
+    expect(container.querySelector("#events")).toBeInTheDocument();
+  });
 
-  it("a list a people is displayed", () => {});
+  it("a list a people is displayed", async () => {
+    render(<Home />);
+    expect(screen.getByText("Samira")).toBeInTheDocument();
+    expect(screen.getByText("Jean-baptiste")).toBeInTheDocument();
+    expect(screen.getByText("Alice")).toBeInTheDocument();
+    expect(screen.getByText("Luís")).toBeInTheDocument();
+    expect(screen.getByText("Christine")).toBeInTheDocument();
+    expect(screen.getByText("Isabelle")).toBeInTheDocument();
+  });
 
   it("a footer is displayed", () => {
     const { container } = render(<Home />);
     expect(container.querySelector("footer")).toBeInTheDocument();
   });
 
-  it("an event card, with the last event, is displayed", () => {});
+  it("an event card, with the last event, is displayed", () => {
+    render(<Home />);
+    expect(screen.getByText("Notre derniére prestation")).toBeInTheDocument();
+  });
 });
